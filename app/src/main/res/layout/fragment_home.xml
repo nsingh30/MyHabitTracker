@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".HomeFragment"
+    android:id="@+id/homeFragment">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginBottom="40dp"
+        android:id="@+id/home_layout">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:id="@+id/introCard">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center|start"
+                android:background="@drawable/intro_background">
+
+                <TextView
+                    android:id="@+id/hi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="35sp"
+                    android:layout_marginStart="30dp"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:text="Hi,"
+                    android:fontFamily="@font/poppins_extrabold" />
+
+                <TextView
+                    android:id="@+id/sub_hi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/hi"
+                    android:layout_marginStart="30dp"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text="You have 3 activites today"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <ProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:id="@+id/progressHome"
+            android:layout_gravity="center"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:indeterminate="true">
+        </ProgressBar>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="30dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="30dp"
+            android:id="@+id/relative"
+            android:visibility="invisible">
+
+            <TextView
+                android:id="@+id/day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Today"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/poppins_semibold" />
+
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/green"
+                android:clickable="true"
+                android:elevation="8dp"
+                android:focusable="true"
+                android:text="+ Add Habit"
+                android:layout_alignParentEnd="true">
+
+            </com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton>
+
+
+        </RelativeLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/recycler"
+            android:layout_margin="30dp"
+            android:background="@color/faint_lilac"
+            android:layout_below="@+id/introCard">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </LinearLayout>
+
+</FrameLayout>

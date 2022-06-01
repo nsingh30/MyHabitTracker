@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ListAll">
+
+<!--    <RelativeLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:id="@+id/all"-->
+<!--        android:layout_margin="30dp">-->
+
+<!--        <RelativeLayout-->
+<!--            android:id="@+id/bar"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="100dp">-->
+
+<!--            <ImageView-->
+<!--                android:id="@+id/back_home"-->
+<!--                android:layout_width="30dp"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_alignParentStart="true"-->
+<!--                android:layout_marginStart="10dp"-->
+<!--                android:clickable="true"-->
+<!--                android:focusable="true"-->
+<!--                android:src="@drawable/ic_baseline_arrow_back_ios_new_24" />-->
+
+<!--&lt;!&ndash;            <S&ndash;&gt;-->
+<!--&lt;!&ndash;                android:id="@+id/search"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_width="30dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_height="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_alignParentEnd="true"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_marginStart="10dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:clickable="true"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:focusable="true"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:src="@drawable/ic_baseline_manage_search_24" />&ndash;&gt;-->
+
+
+
+<!--        </RelativeLayout>-->
+
+    <androidx.appcompat.widget.SearchView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/searchView"
+        android:clickable="true"
+        android:elevation="2dp"
+        android:focusable="true"
+        android:fontFamily="@font/poppins_thin"
+        android:iconifiedByDefault="false"
+        android:queryHint="Search">
+
+    </androidx.appcompat.widget.SearchView>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/sort"
+        app:layout_constraintBottom_toTopOf="@id/scroller"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchView"/>
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/scroller"
+            android:layout_margin="40dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/sort">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                >
+
+                <androidx.recyclerview.widget.RecyclerView
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:spanCount="2"
+                    android:layout_width="match_parent"
+                    android:nestedScrollingEnabled="false"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:id="@+id/recycle_all"
+                    android:layout_margin="10dp"
+                    android:layout_marginBottom="30dp"
+                    android:background="@color/faint_lilac">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+                <ProgressBar
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:id="@+id/progressAll"
+                    android:layout_gravity="center"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:indeterminate="true">
+                </ProgressBar>
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

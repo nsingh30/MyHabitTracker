@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView android:id="@+id/card"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    app:cardCornerRadius="8dp"
+    android:clickable="true"
+    android:focusable="true"
+    app:cardElevation="2dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/layout">
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/check"
+            android:buttonTint="@color/grey"
+            android:gravity="center" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/check"
+            android:layout_marginLeft="5dp"
+            android:layout_marginBottom="2dp"
+            android:textSize="18sp"
+            android:textColor="@color/grey"
+            android:fontFamily="@font/poppins_semibold"/>
+
+        <TextView
+            android:id="@+id/details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="text"
+            android:layout_toEndOf="@+id/check"
+            android:layout_below="@id/title"
+            android:layout_marginLeft="5dp"
+            android:textSize="15sp"
+            android:textColor="@color/grey"
+            android:fontFamily="@font/poppins_regular"/>
+
+<!--        <TextView-->
+<!--            android:id="@+id/end_date"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="text"-->
+<!--            android:layout_toEndOf="@+id/check"-->
+
+<!--            android:layout_margin="5dp"-->
+<!--            -->
+<!--            android:textColor="@color/black"-->
+<!--            android:fontFamily="@font/poppins_thin"-->
+<!--            android:visibility="invisible"/>-->
+
+<!--        <ImageView-->
+<!--            android:id="@+id/optionsMenu"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:src="@drawable/menu"-->
+<!--            android:layout_alignParentEnd="true"-->
+<!--            android:layout_margin="8dp"-->
+<!--            android:clickable="true"-->
+<!--            android:focusable="true"/>-->
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

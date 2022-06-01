@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".UpdateFragment"
+    android:id="@+id/update">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="30dp"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp">
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:id="@+id/back"
+                android:src="@drawable/ic_baseline_arrow_back_ios_new_24"
+                android:layout_alignParentStart="true"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_marginStart="10dp"/>
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:id="@+id/delete_icon"
+                android:src="@drawable/ic_baseline_delete_forever_24"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_marginEnd="10dp"
+                android:layout_alignParentEnd="true" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/top_title"
+            android:text="Edit Habit"
+            android:textSize="30sp"
+            android:layout_marginStart="10dp"
+            android:fontFamily="@font/poppins_semibold"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="10dp"
+            app:boxBackgroundColor="@color/white">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/edit_title"
+                android:text="Edit Title"
+                android:hint="Edit Title"
+                android:textSize="18sp"
+                android:fontFamily="@font/poppins_regular"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="10dp"
+            app:boxBackgroundColor="@color/white">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/edit_details"
+                android:text="Edit Details"
+                android:hint="Edit Details"
+                android:textSize="18sp"
+                android:fontFamily="@font/poppins_regular"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="10dp"
+            app:boxBackgroundColor="@color/white">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/edit_start"
+                android:text="Edit Start Date"
+                android:hint="Edit Start Date"
+                android:textSize="18sp"
+                android:fontFamily="@font/poppins_regular"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="10dp"
+            app:boxBackgroundColor="@color/white">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/edit_end"
+                android:text="Edit End Date"
+                android:hint="Edit End Date"
+                android:textSize="18sp"
+                android:fontFamily="@font/poppins_regular"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/onUpdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="update"/>
+    </LinearLayout>
+
+</FrameLayout>
+
+<!--<androidx.coordinatorlayout.widget.CoordinatorLayout-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="80dp"-->
+<!--android:layout_marginTop="20dp">-->
+
+<!--<com.google.android.material.bottomappbar.BottomAppBar-->
+
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="80dp"-->
+<!--    android:background="@color/white"-->
+<!--    android:layout_gravity="bottom"-->
+<!--    app:contentInsetEnd="0dp"-->
+<!--    app:contentInsetStart="0dp">-->
+
+
+<!--    <com.google.android.material.bottomnavigation.BottomNavigationView-->
+<!--        android:id="@+id/my_toolbar"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        app:itemTextColor="@color/dark_lilac"-->
+<!--        app:backgroundTint="@null"-->
+<!--        app:labelVisibilityMode="unlabeled"-->
+<!--        app:itemIconTint="@color/dark_lilac"-->
+<!--        app:menu="@menu/update_menu">-->
+
+<!--    </com.google.android.material.bottomnavigation.BottomNavigationView>-->
+
+
+<!--</com.google.android.material.bottomappbar.BottomAppBar>-->
+
+<!--</androidx.coordinatorlayout.widget.CoordinatorLayout>-->
