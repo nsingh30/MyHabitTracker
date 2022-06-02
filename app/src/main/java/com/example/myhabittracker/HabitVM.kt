@@ -20,7 +20,7 @@ class HabitVM(app: Application): AndroidViewModel(app) {
 
     private val repo: HabitRepo
 
-
+    private var isSelected: Boolean = false
 
 
     private val search =MutableLiveData<String>()
@@ -56,6 +56,10 @@ class HabitVM(app: Application): AndroidViewModel(app) {
         repo.getHabit(id)
     }
 
+    fun updateStatus(newStatus: Int, id: Int) = viewModelScope.launch {
+        repo.updateStatus(newStatus, id)
+    }
+
     fun updateDoneDays() = viewModelScope.launch{
         repo.updateDoneDays()
     }
@@ -63,10 +67,6 @@ class HabitVM(app: Application): AndroidViewModel(app) {
     fun getTodaysHabits() = viewModelScope.launch {
         repo.getAllHabits()
     }
-
-//    fun searchDataBase(searchQuery: String): LiveData<List<Habit>>? {
-//        return repo.searchDataBase(searchQuery)
-//    }
 
     val searchHabit = Transformations.switchMap(search){ habit ->
         if(habit!= "") {
@@ -79,4 +79,5 @@ class HabitVM(app: Application): AndroidViewModel(app) {
     fun searchIn(text: String) =viewModelScope.launch{
         search.value = text
     }
+
 }

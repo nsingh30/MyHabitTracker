@@ -1,24 +1,31 @@
 package com.example.myhabittracker
 
+import android.content.Context
+import android.content.SharedPreferences
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.ProgressBar
-import android.widget.RelativeLayout
-import android.widget.Toast
+import android.widget.*
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
+import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -39,6 +46,8 @@ class HomeFragment : Fragment(){
     lateinit var progressHome: ProgressBar
     lateinit var homeLayout : LinearLayout
     lateinit var relative : RelativeLayout
+    lateinit var sub: TextView
+    var itemCount: Int? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -63,9 +72,7 @@ class HomeFragment : Fragment(){
         progressHome = view. findViewById(R.id.progressHome)
         homeLayout = view.findViewById(R.id.home_layout)
         relative = view.findViewById(R.id.relative)
-
-        progressHome.isVisible = false
-        homeLayout.isVisible = true
+        sub = view.findViewById(R.id.sub_hi)
 
         rv = view.findViewById<RecyclerView>(R.id.recycler)
         rv.layoutManager = LinearLayoutManager(requireContext())
@@ -80,10 +87,17 @@ class HomeFragment : Fragment(){
 //        var between = ChronoUnit.DAYS.between(date1, date2)
 //
 
+
         vm.todaysHabit?.observe(viewLifecycleOwner, Observer{
                 habitList -> getHabits(habitList)
-            progressHome.isVisible = false
-            relative.isVisible = true
+            itemCount= adapter.itemCount
+            if(itemCount == 0){
+                sub.text = "There is no activity scheduled for today."
+            }else if (itemCount == 1){
+                sub.text = "You have $itemCount activity today"
+            }else{
+                sub.text = "You have $itemCount activities today"
+            }
         })
 
         if(formatted>checkDate){
@@ -92,14 +106,13 @@ class HomeFragment : Fragment(){
 
         fab.setOnClickListener{
 
-            requireActivity().supportFragmentManager.beginTransaction()
+            parentFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container_view, AddHabit(), "homeFragment")
                 .addToBackStack(null)
                 .commit()
         }
 
         adapter = HabitAdapter(habitList)
-
 
         rv.adapter = adapter
         adapter.setOnItemClickListener(object: HabitAdapter.onItemClickListener{
@@ -114,7 +127,7 @@ class HomeFragment : Fragment(){
                 bundle.putString("end", habitList[position].endDate!!)
                 val updateFragment = UpdateFragment()
                 updateFragment.arguments = bundle
-                //setFragmentResult("edit_entry", bundle)
+//                setFragmentResult("edit_entry", bundleOf("extra" to bundle))
                 parentFragmentManager.beginTransaction()
                     .replace(R.id.fragment_container_view, updateFragment, "homeFragment")
                     .addToBackStack(null)
@@ -122,12 +135,69 @@ class HomeFragment : Fragment(){
             }
         })
 
+//        colorDrawableBackground = ColorDrawable(Color.parseColor("#ff0000"))
+//        deleteIcon = ContextCompat.getDrawable(this, R.drawable.ic_delete)!!
+
+        val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+            override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, viewHolder2: RecyclerView.ViewHolder): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, swipeDirection: Int) {
+                removeItem(viewHolder.adapterPosition, viewHolder)
+            }
+
+        }
+
+        val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
+        itemTouchHelper.attachToRecyclerView(rv)
+    }
+
+    fun removeItem(position: Int, viewHolder: RecyclerView.ViewHolder) {
+
+        var removedItem = habitList[viewHolder.adapterPosition]
+        var removedPosition = position
+        val id = habitList[viewHolder.adapterPosition].id
+
+        (habitList as MutableList<Habit>).removeAt(position)
+        if (id != null) {
+            vm.updateStatus(0, id)
+        }
+
+        adapter.notifyDataSetChanged()
+//        vm.todaysHabit?.observe(viewLifecycleOwner, Observer{
+//                habitList -> getHabits(habitList)
+//
+//            itemCount= adapter.itemCount
+//            if(itemCount == 0){
+//                sub.text = "There is no activity scheduled for today."
+//            }else if (itemCount == 1){
+//                sub.text = "You have $itemCount activity today"
+//            }else{
+//                sub.text = "You have $itemCount activities today"
+//            }
+//        })
+
+
+        Snackbar.make(viewHolder.itemView, "'${removedItem.habitTitle}' removed", Snackbar.LENGTH_LONG).setAction("UNDO") {
+
+            if (id != null) {
+                vm.updateStatus(1, id)
+            }
+            (habitList as MutableList<Habit>).add(removedPosition,removedItem)
+            adapter.notifyDataSetChanged()
+
+        }.show()
+
+
     }
 
     fun getHabits(habitList: List<Habit>) {
         this.habitList.clear()
         this.habitList.addAll(habitList)
         adapter.notifyDataSetChanged()
+        rv.isVisible = true
+        progressHome.isGone = true
     }
 
 }

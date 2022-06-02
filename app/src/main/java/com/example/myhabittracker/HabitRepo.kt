@@ -3,6 +3,7 @@ package com.example.myhabittracker
 import android.app.Application
 import android.content.Context
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagedList
 
 class HabitRepo(context: Context) {
@@ -32,6 +33,10 @@ class HabitRepo(context: Context) {
 
     fun updateDoneDays():Unit? {
         return db?.updateDoneDays()
+    }
+
+    fun updateStatus(newStatus: Int, id: Int): Unit?{
+        return db?.updateStatus(newStatus, id)
     }
 
     fun searchDataBase(searchQuery: String): LiveData<List<Habit>>? {

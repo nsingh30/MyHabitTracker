@@ -11,4 +11,5 @@ data class Habit(@PrimaryKey(autoGenerate = true)var id: Int?,
                  @ColumnInfo(name = "startDate")var startDate: String?,
                  @ColumnInfo(name = "endDate")var endDate: String?,
                  @ColumnInfo(name = "totalDays")var totalDays: Int?,
-                 @ColumnInfo(name = "doneDays")var doneDays: Int?)
+                 @ColumnInfo(name = "doneDays")var doneDays: Int?,
+                 @ColumnInfo(name = "status")var status: Int?)

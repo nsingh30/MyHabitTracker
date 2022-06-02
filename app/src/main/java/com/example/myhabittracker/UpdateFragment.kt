@@ -11,6 +11,7 @@ import android.widget.Toast.makeText
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.Observer
@@ -32,9 +33,9 @@ class UpdateFragment : Fragment() {
     lateinit var delete: ImageView
     lateinit var vm: HabitVM
     lateinit var submit: Button
-    lateinit var input_1: TextInputLayout
-    lateinit var input_3: TextInputLayout
-    lateinit var input_4: TextInputLayout
+    lateinit var input1: TextInputLayout
+    lateinit var input3: TextInputLayout
+    lateinit var input4: TextInputLayout
 
 
     override fun onCreateView(
@@ -43,7 +44,6 @@ class UpdateFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         var view = inflater.inflate(R.layout.fragment_update, container, false)
-        setHasOptionsMenu(true)
         return view
     }
 
@@ -51,33 +51,19 @@ class UpdateFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-        activity.let {
-            vm = ViewModelProvider(it!!).get(HabitVM::class.java)
-        }
-
-        var habitList = vm.getAllHabits()
-
+        var vm = HabitVM(requireActivity().application)
 
         var id = arguments?.getInt("id")
-        var title= arguments?.getString("title")
-        var details= arguments?.getString("details")
-        var start= arguments?.getString("start")
-        var end= arguments?.getString("end")
-
-//        setFragmentResultListener("edit_entry"){key, result ->
-//            id = result.getInt("id")
-//            title = result.getString("title")
-//            details = result.getString("details")
-//            start = result.getString("start")
-//            end = result.getString("end")
-//        }
+        var title =arguments?.getString("title")
+        var details = arguments?.getString("details")
+        var start = arguments?.getString("start")
+        var end = arguments?.getString("end")
 
 
         back = view.findViewById(R.id.back)
         back.setOnClickListener {
-            requireActivity().supportFragmentManager.beginTransaction()
+            parentFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container_view, HomeFragment(), "updateFragment")
-                .addToBackStack(null)
                 .commit()
         }
 
@@ -121,9 +107,9 @@ class UpdateFragment : Fragment() {
 
         submit = view.findViewById(R.id.onUpdate)
 
-        input_1 = view.findViewById(R.id.input1)
-        input_3 = view.findViewById(R.id.input3)
-        input_4 = view.findViewById(R.id.input4)
+        input1 = view.findViewById(R.id.input1)
+        input3 = view.findViewById(R.id.input3)
+        input4 = view.findViewById(R.id.input4)
 
         submit.setOnClickListener{
 
@@ -136,13 +122,13 @@ class UpdateFragment : Fragment() {
                 nullValidation = true
             } else {
                 if (name == "") {
-                    input_1.helperText = "Field cannot be empty"
+                    input1.helperText = "Field cannot be empty"
                 }
                 if (start == "") {
-                    input_3.helperText = "Field cannot be empty"
+                    input3.helperText = "Field cannot be empty"
                 }
                 if (end == "") {
-                    input_4.helperText = "Field cannot be empty"
+                    input4.helperText = "Field cannot be empty"
                 }
                 nullValidation = false
             }
@@ -150,24 +136,23 @@ class UpdateFragment : Fragment() {
             var dateFormatCheck: Boolean = true
 
             if (!start.toString().matches(("\\d{4}-\\d{2}-\\d{2}").toRegex())){
-                input_3.helperText = "Enter date in yyyy-mm-dd format"
+                input3.helperText = "Enter date in yyyy-mm-dd format"
                 dateFormatCheck = false
             }
 
             if(!end.toString().matches(("\\d{4}-\\d{2}-\\d{2}").toRegex())) {
-                input_4.helperText = "Enter date in yyyy-mm-dd format"
+                input4.helperText = "Enter date in yyyy-mm-dd format"
                 dateFormatCheck = false
             }
 
             if (nullValidation && dateFormatCheck){
                 val habit = Habit(id, editTitle.text.toString(), editDetails.text.toString(),
-                    editStartDate.text.toString(), editEndDate.text.toString(), null, null)
+                    editStartDate.text.toString(), editEndDate.text.toString(), null, null, 1)
                 vm.updateHabit(habit)
                 Snackbar.make(view, "You updated $title record", Toast.LENGTH_SHORT).show()
 
-                requireActivity().supportFragmentManager.beginTransaction()
+                parentFragmentManager.beginTransaction()
                     .replace(R.id.fragment_container_view, HomeFragment(), "upFragment")
-                    .addToBackStack(null)
                     .commit()
             }else{
                 var snack = Snackbar.make(view, "Please enter all fields", Snackbar.LENGTH_SHORT)
@@ -180,26 +165,22 @@ class UpdateFragment : Fragment() {
 
         delete.setOnClickListener {
             val habit = Habit(id, editTitle.text.toString(), editDetails.text.toString(),
-                editStartDate.text.toString(), editEndDate.text.toString(), null, null)
+                editStartDate.text.toString(), editEndDate.text.toString(), null, null,1)
 //
             MaterialAlertDialogBuilder(requireContext())
                 .setTitle("Alert")
-                .setMessage("This will permanently delete $title. Do you want to continue?")
+                .setMessage("This will permanently delete '$title'. Do you want to continue?")
                 .setPositiveButton("Cancel", null)
                 .setNegativeButton("Delete") {dialog, which ->
                     vm.deleteHabit(habit)
-                    Snackbar.make(view, "You delete $title record", Snackbar.LENGTH_SHORT).show()
-                    }
+                    Snackbar.make(view, "You deleted '$title' record", Snackbar.LENGTH_SHORT).show()
+                    parentFragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container_view, HomeFragment(), "upFragment")
+                        .commit()
+                }
                 .show()
-            requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container_view, HomeFragment(), "upFragment")
-                .addToBackStack(null)
-                .commit()
         }
-
-
     }
-
 }
 
 

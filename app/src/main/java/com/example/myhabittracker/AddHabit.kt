@@ -165,7 +165,7 @@ class AddHabit : Fragment() {
 
             if (nullValidation && dateFormatCheck){
                 vm.insertHabit(Habit(null,name, details.text.toString(),
-                    start, end, between.toInt(), done.toInt()))
+                    start, end, between.toInt(), done.toInt(), 1))
                 Snackbar.make(view, "New Habit added", Snackbar.LENGTH_SHORT).show()
                 requireActivity().supportFragmentManager.beginTransaction()
                     .replace(R.id.fragment_container_view, HomeFragment(), "addFragment")
