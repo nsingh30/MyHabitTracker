@@ -56,6 +56,10 @@ class HabitVM(app: Application): AndroidViewModel(app) {
         repo.getHabit(id)
     }
 
+    fun updateNewStatus(newStatus: Int, current: String) = viewModelScope.launch {
+        repo.updateNewStatus(newStatus, current)
+    }
+
     fun updateStatus(newStatus: Int, id: Int) = viewModelScope.launch {
         repo.updateStatus(newStatus, id)
     }

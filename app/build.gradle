@@ -61,7 +61,7 @@ dependencies {
 
     implementation "androidx.paging:paging-runtime:$paging_version"
 
-
+    implementation 'androidx.preference:preference:1.2.0'
 
 
 }

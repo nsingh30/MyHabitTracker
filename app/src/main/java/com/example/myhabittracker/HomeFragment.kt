@@ -1,24 +1,16 @@
 package com.example.myhabittracker
 
-import android.content.Context
 import android.content.SharedPreferences
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.preference.PreferenceActivity
+import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.annotation.RequiresApi
-import androidx.core.content.ContextCompat
-import androidx.core.os.bundleOf
-import androidx.core.view.isGone
-import androidx.core.view.isVisible
-import androidx.fragment.app.setFragmentResult
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -26,14 +18,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import java.io.Serializable
-import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import java.time.temporal.ChronoUnit
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class HomeFragment : Fragment(){
@@ -48,6 +36,7 @@ class HomeFragment : Fragment(){
     lateinit var relative : RelativeLayout
     lateinit var sub: TextView
     var itemCount: Int? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -78,16 +67,6 @@ class HomeFragment : Fragment(){
         rv.layoutManager = LinearLayoutManager(requireContext())
 
 
-        val current = LocalDateTime.now()
-        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-        val formatted = current.format(formatter)
-        var checkDate = formatted
-        var dateToCheck = checkDate
-//        var date1 = LocalDate.parse(habitList.text, formatter)
-//        var between = ChronoUnit.DAYS.between(date1, date2)
-//
-
-
         vm.todaysHabit?.observe(viewLifecycleOwner, Observer{
                 habitList -> getHabits(habitList)
             itemCount= adapter.itemCount
@@ -100,9 +79,6 @@ class HomeFragment : Fragment(){
             }
         })
 
-        if(formatted>checkDate){
-            vm.updateDays
-        }
 
         fab.setOnClickListener{
 
@@ -196,8 +172,27 @@ class HomeFragment : Fragment(){
         this.habitList.clear()
         this.habitList.addAll(habitList)
         adapter.notifyDataSetChanged()
-        rv.isVisible = true
-        progressHome.isGone = true
+        progressHome.visibility = View.GONE
+        rv.visibility = View.VISIBLE
+
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onResume() {
+        super.onResume()
+        val current = LocalDateTime.now()
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+        val formatted = current.format(formatter)
+        val settings = androidx.preference.PreferenceManager.getDefaultSharedPreferences(requireContext())
+        val lastTimeStarted = settings.getInt("last_time_started", -1)
+        val calendar: Calendar = Calendar.getInstance()
+        val today: Int = calendar.get(Calendar.DAY_OF_YEAR)
+        if (today != lastTimeStarted) {
+            vm.updateNewStatus(1, formatted)
+            val editor = settings.edit()
+            editor.putInt("last_time_started", today)
+            editor.commit()
+        }
     }
 
 }

@@ -35,6 +35,10 @@ class HabitRepo(context: Context) {
         return db?.updateDoneDays()
     }
 
+    fun updateNewStatus(newStatus: Int, current: String): Unit?{
+        return db?.updateNewStatus(newStatus, current)
+    }
+
     fun updateStatus(newStatus: Int, id: Int): Unit?{
         return db?.updateStatus(newStatus, id)
     }

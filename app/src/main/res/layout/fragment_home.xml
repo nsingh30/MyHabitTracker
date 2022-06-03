@@ -53,15 +53,6 @@
 
         </androidx.cardview.widget.CardView>
 
-        <ProgressBar
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:id="@+id/progressHome"
-            android:layout_gravity="center"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:indeterminate="true">
-        </ProgressBar>
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -95,6 +86,16 @@
 
         </RelativeLayout>
 
+        <ProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressHome"
+            android:layout_gravity="center"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:indeterminate="true"
+            android:visibility="visible">
+        </ProgressBar>
+
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -102,7 +103,7 @@
             android:layout_margin="30dp"
             android:background="@color/faint_lilac"
             android:layout_below="@+id/introCard"
-            android:visibility="invisible">
+            android:visibility="gone">
 
         </androidx.recyclerview.widget.RecyclerView>
 

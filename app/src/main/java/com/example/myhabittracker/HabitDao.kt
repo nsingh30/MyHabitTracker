@@ -27,6 +27,9 @@ interface HabitDao {
     @Query("select * from habits where startDate<=:current and endDate>=:current and status=1")
     fun getTodaysHabit(current: String):LiveData<List<Habit>>
 
+    @Query("update habits set status = :newStatus where startDate<=:current and endDate>=:current")
+    fun updateNewStatus(newStatus: Int, current: String)
+
     @Query("update habits set status = :newStatus where id=:id")
     fun updateStatus(newStatus: Int, id: Int)
 

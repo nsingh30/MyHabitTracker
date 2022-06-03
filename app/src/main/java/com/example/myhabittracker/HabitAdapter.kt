@@ -64,6 +64,7 @@ class HabitAdapter(private var habitList: List<Habit>): RecyclerView.Adapter<Vie
         notifyDataSetChanged()
     }
 
+
 //    fun removeItem(position: Int, viewHolder: RecyclerView.ViewHolder) {
 //
 //        removedItem = habitList[position]
