@@ -92,7 +92,8 @@
                     android:id="@+id/recycle_all"
                     android:layout_margin="10dp"
                     android:layout_marginBottom="30dp"
-                    android:background="@color/faint_lilac">
+                    android:background="@color/faint_lilac"
+                    android:visibility="gone">
 
                 </androidx.recyclerview.widget.RecyclerView>
 
@@ -102,7 +103,8 @@
                     android:id="@+id/progressAll"
                     android:layout_gravity="center"
                     style="?android:attr/progressBarStyleHorizontal"
-                    android:indeterminate="true">
+                    android:indeterminate="true"
+                    android:visibility="visible">
                 </ProgressBar>
 
             </LinearLayout>

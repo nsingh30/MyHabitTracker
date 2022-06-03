@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.delay
 
 
 class ViewAllFragment : Fragment() {
@@ -37,7 +38,6 @@ class ViewAllFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setHasOptionsMenu(true)
 
         activity.let {
             vm = ViewModelProvider(it!!).get(HabitVM::class.java)
@@ -65,14 +65,12 @@ class ViewAllFragment : Fragment() {
 
         vm.allHabits?.observe(viewLifecycleOwner, Observer { habitListAll ->
             getHabits(habitListAll)
-            loader.isVisible = false
         })
 
         search.setOnClickListener{
-            if(searchText.text.toString() == "" || searchText.text.toString() == null){
+            if(searchText.text.toString() == ""){
                 vm.allHabits?.observe(viewLifecycleOwner, Observer { habitListAll ->
                     getHabits(habitListAll)
-                    loader.isVisible = false
 
                 })
             }else{
@@ -101,7 +99,6 @@ class ViewAllFragment : Fragment() {
                 }else {
                     vm.allHabits?.observe(viewLifecycleOwner, Observer { habitListAll ->
                         getHabits(habitListAll)
-                        loader.isVisible = false
                     })
                 }
                 true
@@ -120,6 +117,8 @@ class ViewAllFragment : Fragment() {
         this.habitListAll.clear()
         this.habitListAll.addAll(habitList)
         adapter.notifyDataSetChanged()
+        loader.visibility = View.GONE
+        recycler.visibility = View.VISIBLE
     }
 
 }
